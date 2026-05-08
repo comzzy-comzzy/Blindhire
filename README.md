@@ -100,4 +100,3 @@ cd ../app
 npm install
 npm run dev
 
-Built by [Kane](https://x.com/kane_120)
