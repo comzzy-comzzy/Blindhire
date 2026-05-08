@@ -4,7 +4,7 @@ BlindHire is a confidential freelance marketplace built on Ethereum using Zama's
 
 ## Live Demo
 
-**Frontend:** https://blindhire.rugpullchecker.me
+**Frontend:** https://blindhire.site
 
 **Smart Contract (Sepolia):** `0x6F107c596f7CF883863bb112C347D41b26eCE9C6`
 
