@@ -1,0 +1,45 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.generateKeypair = generateKeypair;
+const ethers_1 = require("ethers");
+const error_js_1 = require("../../utils/error.js");
+const string_js_1 = require("../../utils/string.js");
+const ML_KEM_CT_PK_LENGTH = 1568;
+const ML_KEM_SK_LENGTH = 3168;
+const PUBLIC_KEY_LENGTH = (ML_KEM_CT_PK_LENGTH + 8) * 2;
+const PRIVATE_KEY_LENGTH = (ML_KEM_SK_LENGTH + 8) * 2;
+function _verifyKeypair(keyPair) {
+    keyPair.publicKey = (0, string_js_1.remove0x)(keyPair.publicKey);
+    keyPair.privateKey = (0, string_js_1.remove0x)(keyPair.privateKey);
+    if (!ethers_1.ethers.isHexString("0x" + keyPair.publicKey, PUBLIC_KEY_LENGTH)) {
+        throw new error_js_1.FhevmError(`Invalid key pair's publicKey. Call FhevmInstance.generateKeyPair() to generate a valid FHEVM key pair.`);
+    }
+    if (!ethers_1.ethers.isHexString("0x" + keyPair.privateKey, PRIVATE_KEY_LENGTH)) {
+        throw new error_js_1.FhevmError(`Invalid key pair's publicKey. Call FhevmInstance.generateKeyPair() to generate a valid FHEVM key pair.`);
+    }
+}
+function generateKeypair() {
+    const wallet = ethers_1.ethers.Wallet.createRandom();
+    const walletPublicKeyNoPrefix = (0, string_js_1.remove0x)(wallet.publicKey);
+    const walletPrivateKeyNoPrefix = (0, string_js_1.remove0x)(wallet.privateKey);
+    (0, error_js_1.assertFhevm)(walletPublicKeyNoPrefix.length === walletPrivateKeyNoPrefix.length + 2);
+    const publicKeyPrefixLen = 2 * PUBLIC_KEY_LENGTH - walletPublicKeyNoPrefix.length;
+    const privateKeyPrefixLen = 2 * PRIVATE_KEY_LENGTH - (2 + walletPrivateKeyNoPrefix.length);
+    let n = Math.floor(publicKeyPrefixLen / 8);
+    const publicKeyPrefix = "deadbeef".repeat(n) + "0".repeat(publicKeyPrefixLen - n * 8);
+    n = Math.floor(privateKeyPrefixLen / 8);
+    const privateKeyPrefix = "deadbeef".repeat(n) + "0".repeat(privateKeyPrefixLen - n * 8);
+    const publicKey = "0x" + publicKeyPrefix + walletPublicKeyNoPrefix;
+    const privateKey = "0x" + privateKeyPrefix + "00" + walletPrivateKeyNoPrefix;
+    (0, error_js_1.assertFhevm)(publicKey.length === 2 + 2 * PUBLIC_KEY_LENGTH);
+    (0, error_js_1.assertFhevm)(privateKey.length === 2 + 2 * PRIVATE_KEY_LENGTH);
+    (0, error_js_1.assertFhevm)(walletPublicKeyNoPrefix.length === 66);
+    (0, error_js_1.assertFhevm)(walletPrivateKeyNoPrefix.length === 64);
+    const keypair = {
+        publicKey,
+        privateKey,
+    };
+    _verifyKeypair(keypair);
+    return keypair;
+}
+//# sourceMappingURL=keypair.js.map

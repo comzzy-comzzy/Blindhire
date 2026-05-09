@@ -1,0 +1,17 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.ENCRYPTION_TYPES = exports.generateKeypair = void 0;
+const keypair_js_1 = require("./sdk/keypair.js");
+Object.defineProperty(exports, "generateKeypair", { enumerable: true, get: function () { return keypair_js_1.generateKeypair; } });
+const ENCRYPTION_TYPES = {
+    2: 0,
+    8: 2,
+    16: 3,
+    32: 4,
+    64: 5,
+    128: 6,
+    160: 7,
+    256: 8,
+};
+exports.ENCRYPTION_TYPES = ENCRYPTION_TYPES;
+//# sourceMappingURL=types.js.map

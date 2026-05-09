@@ -1,0 +1,15 @@
+import type { CoprocessorConfig } from "@fhevm/mock-utils";
+import { FhevmEnvironmentPaths } from "../FhevmEnvironmentPaths";
+/**
+ * This function generates `/path/to/user-package/fhevmTemp/@fhevm/solidity/config/ZamaConfig.sol`.
+ * It parses `/path/to/user-package/node_modules/@fhevm/solidity/config/ZamaConfig.sol` file
+ * and replaces the addresses listed by the addresses used in the current mock FHEVM environment.
+ * @returns The absolute path to the generated `ZamaConfig.sol`
+ */
+export declare function generateZamaConfigDotSol({ paths, localAddresses, sepoliaAddresses, mainnetAddresses, }: {
+    paths: FhevmEnvironmentPaths;
+    localAddresses?: CoprocessorConfig;
+    sepoliaAddresses?: CoprocessorConfig;
+    mainnetAddresses?: CoprocessorConfig;
+}): string;
+//# sourceMappingURL=ZamaConfigDotSol.d.ts.map
