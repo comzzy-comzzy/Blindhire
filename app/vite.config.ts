@@ -21,7 +21,7 @@ export default defineConfig({
   preview: {
     port: 3004,
     host: true,
-    allowedHosts: ["blindhire.rugpullchecker.me"],
+    allowedHosts: ["blindhire.site"],
   },
   server: {
     port: 3004,
